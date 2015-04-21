@@ -53,7 +53,10 @@ var createGrid = function () {
         x = conf.seqBeat;
         for (y = 0; y < conf.notes; y += 1) {
             if (conf.noteStates[[x, y]] === 1) {
-                conf.play(y);
+                // flip the note numbers then
+                // subtract the extra 1 so that
+                // the bottom note is zero
+                conf.play((conf.notes - y) - 1);
             }
         }
     };
