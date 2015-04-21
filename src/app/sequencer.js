@@ -19,7 +19,7 @@ var createSequencer = function () {
 
     // return time between steps in ms
     var calcInterval = function () {
-        return ((state.bpm / 60) * state.noteLength) * 1000;
+        return ((60 / state.bpm) * state.noteLength) * 1000;
     };
 
     var triggerEvent = function (name, args) {
