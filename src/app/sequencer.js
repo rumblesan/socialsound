@@ -45,11 +45,15 @@ var createSequencer = function () {
 
     Seq.setBpm = function (newBpm) {
         state.bpm = newBpm;
-        emitter.emit('bpmchange', [newBpm]);
     };
 
     Seq.on = function (eventName, cb) {
         emitter.on(eventName, cb);
+    };
+
+    Seq.changeBpm = function (newBpm) {
+        Seq.setBpm(newBpm);
+        emitter.emit('bpmchange', [newBpm]);
     };
 
     return Seq;
