@@ -6,8 +6,9 @@
   "author": "Guy John",
   "license": "BSD-3",
   "scripts": {
-    "build": "browserify . > ./dist/app.js",
-    "postbuild": "cp -r ./html/* ./dist/; cat ./style/*.css > ./dist/style.css; cp ./src/lib/processing.js ./dist/processing.js",
+    "prebuild": "mkdir -p ./dist/templates ./dist/static/js ./dist/static/css",
+    "build": "browserify . > ./dist/static/js/app.js",
+    "postbuild": "cp -r ./html/* ./dist/templates ; cat ./style/*.css > ./dist/static/css/style.css; cp ./src/lib/processing.js ./dist/static/js/lib/processing.js",
     "clean": "rm -rf ./dist/*",
     "test": "nodeunit tests"
   },
