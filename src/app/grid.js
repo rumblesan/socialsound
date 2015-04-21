@@ -35,6 +35,10 @@ var createGrid = function () {
         conf.seqBeat = b;
     };
 
+    Grid.setButtonState = function (buttonX, buttonY, newValue) {
+        conf.noteStates[[buttonX, buttonY]] = newValue;
+    };
+
     Grid.stop = function () {
         conf.seqBeat = -1;
     };
@@ -100,7 +104,7 @@ var createGrid = function () {
             } else {
                 newValue = 1;
             }
-            conf.noteStates[[buttonX, buttonY]] = 0;
+            conf.noteStates[[buttonX, buttonY]] = newValue;
             emitter.emit('buttonpress', [buttonX, buttonY, newValue]);
         };
 

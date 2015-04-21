@@ -5,7 +5,11 @@
         <link rel='stylesheet' type='text/css' href='style.css'>
 
         <script>
-            var bpm = "{{ bpm }}";
+            var initialState = {
+                seqId: "{{ seq_id }}",
+                bpm: "{{ bpm }}",
+                buttonInfo: {{ button_info|tojson }}
+            };
         </script>
 
         <script type="text/javascript" src="http://js.pusher.com/2.2/pusher.min.js"></script>

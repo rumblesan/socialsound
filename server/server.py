@@ -35,7 +35,7 @@ def open_seq(seq_id):
             'buttons': {},
             'bpm': 120
         }
-    button_info = serverstate[seq_id]['buttons'].values()
+    button_info = serverstate[seq_id]['buttons'].items()
     bpm = serverstate[seq_id]['bpm']
     return render_template(
         'index.html',
@@ -58,14 +58,18 @@ def newWord(seq_id):
         seq_state = serverstate[seq_id]
 
         seq_buttons = seq_state['buttons']
+        bkey = "%i,%i" % (button_row, button_col)
 
-        seq_buttons[[button_row, button_col]] = button_state
+        if button_state == 0:
+            del(seq_buttons[bkey])
+        else:
+            seq_buttons[bkey] = button_state
 
         p[seq_id].trigger('button', button_data)
         return ("Pressed Button", 200)
 
 
-@app.route('/board/<string:seq_id>/bpm', methods=['POST'])
+@app.route('/sequencer/<string:seq_id>/bpm', methods=['POST'])
 def updateWord(seq_id):
     if seq_id not in serverstate:
         return "Sequencer doesn't exist", 404

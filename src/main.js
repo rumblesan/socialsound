@@ -1,5 +1,5 @@
 /*jslint browser: true */
-/*global require, Processing, Pusher */
+/*global require, Processing, Pusher, initialState */
 
 var $ = require('./lib/jquery-2.1.3');
 var Grid = require('./app/grid');
@@ -21,11 +21,20 @@ $(function () {
         grid.nextBeat();
     });
 
+    var b;
+    var xCoord, yCoord, data;
+    for (b = 0; b < initialState.buttonInfo.length; b += 1) {
+        data = initialState.buttonInfo[b][0].split(",");
+        xCoord = data[0];
+        yCoord = data[1];
+        grid.setButtonState(xCoord, yCoord, 1);
+    }
+
     sequencer.on('stop', function () {
         grid.stop();
     });
 
-    sequencer.setBpm(120);
+    sequencer.setBpm(initialState.bpm);
 
     var voiceNum = 12;
     var voices = [];
@@ -42,7 +51,28 @@ $(function () {
     });
 
     grid.on('buttonpress', function (x, y, v) {
-        console.log(x, y, v);
+        $.ajax({
+            method: 'POST',
+            url: '/sequencer/' + initialState.seqId + '/button/press',
+            contentType: "application/json",
+            data: JSON.stringify({
+                row: x,
+                column: y,
+                state: v
+            })
+        });
+    });
+
+    sequencer.on('bpmchange', function (newBpm) {
+
+        $.ajax({
+            method: 'POST',
+            url: '/sequencer/' + initialState.seqId + '/bpm',
+            contentType: "application/json",
+            data: JSON.stringify({
+                bpm: newBpm
+            })
+        });
     });
 
     var processingInstance = new Processing(canvas, grid.sketch);
