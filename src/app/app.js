@@ -15,6 +15,9 @@ var createApp = function () {
     conf.noteStates = {};
     conf.buttonWidth = conf.canvasX / conf.beats;
     conf.buttonHeight = conf.canvasY / conf.notes;
+    conf.play = function (note) {
+        console.log('play', note);
+    };
 
     conf.seqBeat = 0;
 
@@ -33,6 +36,10 @@ var createApp = function () {
         conf.seqBeat = b;
     };
 
+    App.setPlayFunc = function (cb) {
+        conf.play = cb;
+    };
+
     App.stop = function () {
         conf.seqBeat = -1;
     };
@@ -46,7 +53,7 @@ var createApp = function () {
         x = conf.seqBeat;
         for (y = 0; y < conf.notes; y += 1) {
             if (conf.noteStates[[x, y]] === 1) {
-                console.log([x, y], 'play');
+                conf.play(y);
             }
         }
     };
