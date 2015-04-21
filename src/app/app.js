@@ -33,6 +33,24 @@ var createApp = function () {
         conf.seqBeat = b;
     };
 
+    App.stop = function () {
+        conf.seqBeat = -1;
+    };
+
+    App.nextBeat = function () {
+        conf.seqBeat += 1;
+        if (conf.seqBeat >= conf.beats) {
+            conf.seqBeat = 0;
+        }
+        var x, y;
+        x = conf.seqBeat;
+        for (y = 0; y < conf.notes; y += 1) {
+            if (conf.noteStates[[x, y]] === 1) {
+                console.log([x, y], 'play');
+            }
+        }
+    };
+
     App.sketch = function (p) {
 
         var drawButton = function (x, y) {
@@ -76,7 +94,6 @@ var createApp = function () {
             } else {
                 conf.noteStates[[buttonX, buttonY]] = 1;
             }
-            console.log(p.mouseX, p.mouseY);
         };
 
     };
