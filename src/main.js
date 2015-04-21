@@ -6,14 +6,7 @@ var App = require('./app/app');
 
 $(function () {
 
-    document.body = document.createElement('body');
-
-    var canvas = document.createElement('canvas');
-    canvas.setAttribute('id', 'sequencer');
-    canvas.setAttribute('width', '640');
-    canvas.setAttribute('height', '480');
-
-    document.body.appendChild(canvas);
+    var canvas = document.getElementById('display');
 
     var app = App.create();
 
