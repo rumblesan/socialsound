@@ -12,6 +12,8 @@ $(function () {
 
     var processingInstance = new Processing(canvas, app.sketch);
 
+    window.app = app;
+
     console.log('loaded');
 
 });

@@ -15,7 +15,8 @@ var createApp = function () {
     conf.noteStates = {};
     conf.buttonWidth = conf.canvasX / conf.beats;
     conf.buttonHeight = conf.canvasY / conf.notes;
-    console.log(conf);
+
+    conf.seqBeat = 0;
 
     var setupState = function () {
         var x, y, poskey;
@@ -27,6 +28,10 @@ var createApp = function () {
         }
     };
     setupState();
+
+    App.setSeqBeat = function (b) {
+        conf.seqBeat = b;
+    };
 
     App.sketch = function (p) {
 
@@ -51,6 +56,11 @@ var createApp = function () {
 
             var y, x;
             for (x = 0; x < conf.beats; x += 1) {
+                if (x === conf.seqBeat) {
+                    p.stroke(255, 0, 0);
+                } else {
+                    p.stroke(0, 0, 0);
+                }
                 for (y = 0; y < conf.notes; y += 1) {
                     drawButton(x, y);
                 }
