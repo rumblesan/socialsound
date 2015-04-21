@@ -2,7 +2,7 @@
 /*global require, Processing */
 
 var $ = require('./lib/jquery-2.1.3');
-var App = require('./app/app');
+var Grid = require('./app/grid');
 var Seq = require('./app/sequencer');
 
 $(function () {
@@ -10,21 +10,21 @@ $(function () {
     var canvas = document.getElementById('display');
 
     var sequencer = Seq.create();
-    var app = App.create();
+    var grid = Grid.create();
 
     sequencer.on('step', function () {
-        app.nextBeat();
+        grid.nextBeat();
     });
 
     sequencer.on('stop', function () {
-        app.stop();
+        grid.stop();
     });
 
     sequencer.setBpm(120);
 
-    var processingInstance = new Processing(canvas, app.sketch);
+    var processingInstance = new Processing(canvas, grid.sketch);
 
-    window.app = app;
+    window.grid = grid;
     window.sequencer = sequencer;
 
 });

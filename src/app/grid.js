@@ -3,8 +3,8 @@
 
 'use strict';
 
-var createApp = function () {
-    var App = {};
+var createGrid = function () {
+    var Grid = {};
     var internal = {};
 
     var conf = {};
@@ -32,19 +32,19 @@ var createApp = function () {
     };
     setupState();
 
-    App.setSeqBeat = function (b) {
+    Grid.setSeqBeat = function (b) {
         conf.seqBeat = b;
     };
 
-    App.setPlayFunc = function (cb) {
+    Grid.setPlayFunc = function (cb) {
         conf.play = cb;
     };
 
-    App.stop = function () {
+    Grid.stop = function () {
         conf.seqBeat = -1;
     };
 
-    App.nextBeat = function () {
+    Grid.nextBeat = function () {
         conf.seqBeat += 1;
         if (conf.seqBeat >= conf.beats) {
             conf.seqBeat = 0;
@@ -58,7 +58,7 @@ var createApp = function () {
         }
     };
 
-    App.sketch = function (p) {
+    Grid.sketch = function (p) {
 
         var drawButton = function (x, y) {
             if (conf.noteStates[[x, y]] === 1) {
@@ -105,10 +105,10 @@ var createApp = function () {
 
     };
 
-    return App;
+    return Grid;
 };
 
 module.exports = {
-    create: createApp
+    create: createGrid
 };
 
