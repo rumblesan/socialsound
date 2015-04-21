@@ -1,5 +1,5 @@
 /*jslint browser: true */
-/*global require, Processing */
+/*global require, Processing, Pusher */
 
 var $ = require('./lib/jquery-2.1.3');
 var Grid = require('./app/grid');
