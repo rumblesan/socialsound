@@ -35,13 +35,15 @@ $(function () {
     }
     audio.connectVoices(voices);
 
-    var playFunc = function (note) {
+    grid.on('play', function (note) {
         var n = note + 60; // increase octave, 60 is middle C
         var f = Math.pow(2, ((n - 69)/12)) * 440;
-        console.log('playing note', note, n, f);
         voices[note].play(f, 1);
-    };
-    grid.setPlayFunc(playFunc);
+    });
+
+    grid.on('buttonpress', function (x, y, v) {
+        console.log(x, y, v);
+    });
 
     var processingInstance = new Processing(canvas, grid.sketch);
 

@@ -3,9 +3,11 @@
 
 'use strict';
 
+var Emitter = require('./emitter');
+
 var createGrid = function () {
     var Grid = {};
-    var internal = {};
+    var emitter = Emitter.create();
 
     var conf = {};
     conf.canvasX = 1024;
@@ -15,9 +17,6 @@ var createGrid = function () {
     conf.noteStates = {};
     conf.buttonWidth = conf.canvasX / conf.beats;
     conf.buttonHeight = conf.canvasY / conf.notes;
-    conf.play = function (note) {
-        console.log('play', note);
-    };
 
     conf.seqBeat = 0;
 
@@ -36,10 +35,6 @@ var createGrid = function () {
         conf.seqBeat = b;
     };
 
-    Grid.setPlayFunc = function (cb) {
-        conf.play = cb;
-    };
-
     Grid.stop = function () {
         conf.seqBeat = -1;
     };
@@ -56,7 +51,7 @@ var createGrid = function () {
                 // flip the note numbers then
                 // subtract the extra 1 so that
                 // the bottom note is zero
-                conf.play((conf.notes - y) - 1);
+                emitter.emit('play', [(conf.notes - y) - 1]);
             }
         }
     };
@@ -99,13 +94,20 @@ var createGrid = function () {
         p.mouseClicked = function () {
             var buttonX = Math.floor(p.mouseX / conf.buttonWidth);
             var buttonY = Math.floor(p.mouseY / conf.buttonHeight);
+            var newValue;
             if (conf.noteStates[[buttonX, buttonY]]) {
-                conf.noteStates[[buttonX, buttonY]] = 0;
+                newValue = 0;
             } else {
-                conf.noteStates[[buttonX, buttonY]] = 1;
+                newValue = 1;
             }
+            conf.noteStates[[buttonX, buttonY]] = 0;
+            emitter.emit('buttonpress', [buttonX, buttonY, newValue]);
         };
 
+    };
+
+    Grid.on = function (eventName, cb) {
+        emitter.on(eventName, cb);
     };
 
     return Grid;
