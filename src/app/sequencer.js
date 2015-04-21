@@ -11,7 +11,8 @@ var createSequencer = function () {
     state.callbacks = {
         start: [],
         stop: [],
-        step: []
+        step: [],
+        bpmchange: [],
     };
     state.bpm = 120;
     state.noteLength = (1/4);
@@ -53,7 +54,7 @@ var createSequencer = function () {
 
     Seq.setBpm = function (newBpm) {
         state.bpm = newBpm;
-        triggerEvent('stop', [newBpm]);
+        triggerEvent('bpmchange', [newBpm]);
     };
 
     Seq.on = function (eventName, cb) {
