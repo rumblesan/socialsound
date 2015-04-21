@@ -41,7 +41,8 @@ def open_seq(seq_id):
         'index.html',
         button_info=button_info,
         bpm=bpm,
-        seq_id=seq_id
+        seq_id=seq_id,
+        pusher_key=app.config['PUSHER_KEY']
     )
 
 

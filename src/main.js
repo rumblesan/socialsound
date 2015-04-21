@@ -12,6 +12,16 @@ $(function () {
 
     var ctx = Audio.createContext(window);
 
+    var pusher = new Pusher(initialState.pusherKey);
+    var channel = pusher.subscribe(initialState.seqId);
+    channel.bind('button', function (data) {
+        grid.setButtonState(data.row, data.column, data.state);
+    });
+
+    channel.bind('bpm', function (data) {
+        sequencer.setBpm(data.bpm);
+    });
+
     var audio = Audio.createAudio(ctx);
 
     var sequencer = Seq.create();
